@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:umeng_analytics_plugin/umeng_analytics_plugin.dart';
 
 void main() => runApp(MyApp());
@@ -20,23 +19,16 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      platformVersion = await UmengAnalyticsPlugin.platformVersion;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
+    var result = await UMengAnalyticsPlugin.init(
+      androidKey: '5dfc5b91cb23d26df0000a90',
+      iosKey: '5dfc5c034ca35748d1000c4c',
+    );
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = platformVersion;
+      _platformVersion = result ? 'OK' : 'ERROR';
     });
   }
 
