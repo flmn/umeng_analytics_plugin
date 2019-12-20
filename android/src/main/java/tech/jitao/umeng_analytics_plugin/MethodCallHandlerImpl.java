@@ -23,14 +23,14 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
             case "init":
                 init(call, result);
                 break;
-            case "onPageStart":
-                onPageStart(call, result);
+            case "pageStart":
+                pageStart(call, result);
                 break;
-            case "onPageEnd":
-                onPageEnd(call, result);
+            case "pageEnd":
+                pageEnd(call, result);
                 break;
-            case "onEvent":
-                onEvent(call, result);
+            case "event":
+                event(call, result);
                 break;
             default:
                 result.notImplemented();
@@ -38,39 +38,35 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
     }
 
     private void init(MethodCall call, MethodChannel.Result result) {
-        final String androidKey = call.argument("androidKey");
-        final String channel = call.argument("channel");
-
         Boolean logEnabled = call.argument("logEnabled");
         if (logEnabled == null) {
             logEnabled = false;
         }
+        UMConfigure.setLogEnabled(logEnabled);
 
         Boolean encryptEnabled = call.argument("encryptEnabled");
         if (encryptEnabled == null) {
             encryptEnabled = false;
         }
+        UMConfigure.setEncryptEnabled(encryptEnabled);
+
+        final String androidKey = call.argument("androidKey");
+        final String channel = call.argument("channel");
+        UMConfigure.init(context, androidKey, channel, UMConfigure.DEVICE_TYPE_PHONE, null);
 
         Integer sessionContinueMillis = call.argument("sessionContinueMillis");
         if (sessionContinueMillis == null) {
             sessionContinueMillis = 30000;
         }
+        MobclickAgent.setSessionContinueMillis(sessionContinueMillis);
 
         Boolean catchUncaughtExceptions = call.argument("catchUncaughtExceptions");
         if (catchUncaughtExceptions == null) {
             catchUncaughtExceptions = true;
         }
-
-        String pageCollectionMode = call.argument("pageCollectionMode");
-
-        UMConfigure.setLogEnabled(logEnabled);
-        UMConfigure.init(context, androidKey, channel, UMConfigure.DEVICE_TYPE_PHONE, null);
-        UMConfigure.setEncryptEnabled(encryptEnabled);
-
-        MobclickAgent.setSessionContinueMillis(sessionContinueMillis);
         MobclickAgent.setCatchUncaughtExceptions(catchUncaughtExceptions);
 
-        if ("MANUAL".equals(pageCollectionMode)) {
+        if ("MANUAL".equals(call.argument("pageCollectionMode"))) {
             MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.MANUAL);
         } else {
             MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
@@ -79,7 +75,7 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
         result.success(true);
     }
 
-    private void onPageStart(MethodCall call, MethodChannel.Result result) {
+    private void pageStart(MethodCall call, MethodChannel.Result result) {
         final String viewName = call.argument("viewName");
 
         MobclickAgent.onPageStart(viewName);
@@ -87,7 +83,7 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
         result.success(null);
     }
 
-    private void onPageEnd(MethodCall call, MethodChannel.Result result) {
+    private void pageEnd(MethodCall call, MethodChannel.Result result) {
         final String viewName = call.argument("viewName");
 
         MobclickAgent.onPageEnd(viewName);
@@ -95,7 +91,7 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
         result.success(null);
     }
 
-    private void onEvent(MethodCall call, MethodChannel.Result result) {
+    private void event(MethodCall call, MethodChannel.Result result) {
         final String eventId = call.argument("eventId");
         final String label = call.argument("label");
 
