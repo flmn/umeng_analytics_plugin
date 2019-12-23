@@ -31,28 +31,28 @@ class UMengAnalyticsPlugin {
     return _channel.invokeMethod<bool>('init', map);
   }
 
-  static void onPageStart(String viewName) {
+  static void pageStart(String viewName) {
     Map<String, dynamic> map = {
       'viewName': viewName,
     };
 
-    _channel.invokeMethod<bool>('onPageStart', map);
+    _channel.invokeMethod<bool>('pageStart', map);
   }
 
-  static void onPageEnd(String viewName) {
+  static void pageEnd(String viewName) {
     Map<String, dynamic> map = {
       'viewName': viewName,
     };
 
-    _channel.invokeMethod<bool>('onPageEnd', map);
+    _channel.invokeMethod<bool>('pageEnd', map);
   }
 
-  static void onEvent(String eventId, {String label}) {
+  static void event(String eventId, {String label}) {
     Map<String, dynamic> map = {
       'eventId': eventId,
       'label': label,
     };
 
-    _channel.invokeMethod<bool>('onEvent', map);
+    _channel.invokeMethod<bool>('event', map);
   }
 }
