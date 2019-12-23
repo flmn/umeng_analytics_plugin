@@ -27,10 +27,11 @@
 - (void)init:(FlutterMethodCall*)call result:(FlutterResult)result {
     [MobClick setLogEnabled:call.arguments[@"logEnabled"]];
     [MobClick setEncryptEnabled:call.arguments[@"encryptEnabled"]];
+    [MobClick setLogSendInterval:[call.arguments[@"sessionContinueMillis"] doubleValue]];
     UMConfigInstance.appKey = call.arguments[@"iosKey"];
     UMConfigInstance.channelId = call.arguments[@"channel"];
     UMConfigInstance.bCrashReportEnabled = call.arguments[@"catchUncaughtExceptions"];
-    [MobClick setLogSendInterval:[call.arguments[@"sessionContinueMillis"] doubleValue]];
+    [MobClick startWithConfigure:UMConfigInstance];
 }
 
 - (void)pageStart:(FlutterMethodCall*)call result:(FlutterResult)result {
