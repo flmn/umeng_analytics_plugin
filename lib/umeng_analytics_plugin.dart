@@ -50,8 +50,11 @@ class UMengAnalyticsPlugin {
   static void event(String eventId, {String label}) {
     Map<String, dynamic> map = {
       'eventId': eventId,
-      'label': label,
     };
+
+    if (label != null) {
+      map['label'] = label;
+    }
 
     _channel.invokeMethod<bool>('event', map);
   }

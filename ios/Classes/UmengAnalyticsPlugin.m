@@ -25,13 +25,14 @@
 }
 
 - (void)init:(FlutterMethodCall*)call result:(FlutterResult)result {
-    [MobClick setLogEnabled:call.arguments[@"logEnabled"]];
-    [MobClick setEncryptEnabled:call.arguments[@"encryptEnabled"]];
-    [MobClick setLogSendInterval:[call.arguments[@"sessionContinueMillis"] doubleValue]];
     UMConfigInstance.appKey = call.arguments[@"iosKey"];
     UMConfigInstance.channelId = call.arguments[@"channel"];
     UMConfigInstance.bCrashReportEnabled = call.arguments[@"catchUncaughtExceptions"];
     [MobClick startWithConfigure:UMConfigInstance];
+    
+    [MobClick setLogEnabled:call.arguments[@"logEnabled"]];
+    [MobClick setEncryptEnabled:call.arguments[@"encryptEnabled"]];
+    [MobClick setLogSendInterval:[call.arguments[@"sessionContinueMillis"] doubleValue]];
 }
 
 - (void)pageStart:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -54,7 +55,11 @@
     NSString* eventId = call.arguments[@"eventId"];
     NSString* label = call.arguments[@"label"];
     
-    [MobClick event:eventId label:label];
+    if (label == nil) {
+        [MobClick event:eventId];
+    } else {
+        [MobClick event:eventId label:label];
+    }
     
     result(nil);
 }
