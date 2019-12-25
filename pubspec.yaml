@@ -1,8 +1,8 @@
 name: umeng_analytics_plugin
-description: A new Flutter plugin.
-version: 0.0.1
-author:
-homepage:
+description: A Umeng analytics Flutter plugin.
+version: 1.0.0
+author: Ji Tao <jitao@jitao.tech>
+homepage: https://github.com/flmn/umeng_analytics_plugin
 
 environment:
   sdk: ">=2.5.0 <3.0.0"
