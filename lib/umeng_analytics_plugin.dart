@@ -3,10 +3,22 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-class UMengAnalyticsPlugin {
+/// Umeng analytics plugin
+class UmengAnalyticsPlugin {
+  /// Method channel
   static const MethodChannel _channel =
-      const MethodChannel('jitao.tech/umeng_analytics_plugin');
+      MethodChannel('jitao.tech/umeng_analytics_plugin');
 
+  /// Initialize plugin with configurations.
+  ///
+  /// [androidKey] is for android app key.
+  /// [iosKey] is for ios app key.
+  /// [channel] is distribution for this app, can leave it empty.
+  /// [logEnabled] turn on or off log, default for false.
+  /// [encryptEnabled] turn on or off log encrypt, default for false.
+  /// [sessionContinueMillis] time in milliseconds to upload analytics data.
+  /// [catchUncaughtExceptions] whether to catch uncaught exceptions, default for true.
+  /// [pageCollectionMode] how to collect page data, leave it AUTO is ok, for future details, read umeng doc.
   static Future<bool> init({
     @required String androidKey,
     @required String iosKey,
@@ -31,6 +43,7 @@ class UMengAnalyticsPlugin {
     return _channel.invokeMethod<bool>('init', map);
   }
 
+  /// Send a page start event for [viewName]
   static void pageStart(String viewName) {
     Map<String, dynamic> map = {
       'viewName': viewName,
@@ -39,6 +52,7 @@ class UMengAnalyticsPlugin {
     _channel.invokeMethod<bool>('pageStart', map);
   }
 
+  /// Send a page end event for [viewName]
   static void pageEnd(String viewName) {
     Map<String, dynamic> map = {
       'viewName': viewName,
@@ -47,6 +61,7 @@ class UMengAnalyticsPlugin {
     _channel.invokeMethod<bool>('pageEnd', map);
   }
 
+  /// Send a general event for [eventId] with a [label]
   static void event(String eventId, {String label}) {
     Map<String, dynamic> map = {
       'eventId': eventId,
