@@ -10,7 +10,7 @@ Flutter 版友盟统计插件。
 
 ### 初始化
 
-到 [https://www.umeng.com/] 申请 Android 和 iOS 的appKey。调用 init 方法初始化。
+到 https://www.umeng.com/ 申请 Android 和 iOS 的appKey。调用 init 方法初始化。
 
 ```
 await UMengAnalyticsPlugin.init(
