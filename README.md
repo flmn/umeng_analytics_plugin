@@ -2,6 +2,8 @@
 
 Flutter 版友盟统计插件。
 
+公众号文章：[Flutter 集成友盟统计](https://mp.weixin.qq.com/s/2kkx09OhBO4bgclPqrVWNA)。
+
 ## 基础使用
 
 代码可参考 example。
