@@ -6,8 +6,7 @@ import 'package:flutter/services.dart';
 /// Umeng analytics plugin
 class UmengAnalyticsPlugin {
   /// Method channel
-  static const MethodChannel _channel =
-      MethodChannel('jitao.tech/umeng_analytics_plugin');
+  static const MethodChannel _channel = MethodChannel('jitao.tech/umeng_analytics_plugin');
 
   /// Initialize plugin with configurations.
   ///
@@ -44,25 +43,25 @@ class UmengAnalyticsPlugin {
   }
 
   /// Send a page start event for [viewName]
-  static void pageStart(String viewName) {
+  static Future<bool> pageStart(String viewName) async {
     Map<String, dynamic> map = {
       'viewName': viewName,
     };
 
-    _channel.invokeMethod<bool>('pageStart', map);
+    return _channel.invokeMethod<bool>('pageStart', map);
   }
 
   /// Send a page end event for [viewName]
-  static void pageEnd(String viewName) {
+  static Future<bool> pageEnd(String viewName) async {
     Map<String, dynamic> map = {
       'viewName': viewName,
     };
 
-    _channel.invokeMethod<bool>('pageEnd', map);
+    return _channel.invokeMethod<bool>('pageEnd', map);
   }
 
   /// Send a general event for [eventId] with a [label]
-  static void event(String eventId, {String label}) {
+  static Future<bool> event(String eventId, {String label}) async {
     Map<String, dynamic> map = {
       'eventId': eventId,
     };
@@ -71,6 +70,6 @@ class UmengAnalyticsPlugin {
       map['label'] = label;
     }
 
-    _channel.invokeMethod<bool>('event', map);
+    return _channel.invokeMethod<bool>('event', map);
   }
 }

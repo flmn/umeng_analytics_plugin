@@ -20,12 +20,16 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
-    var result = await UMengAnalyticsPlugin.init(
+    var result = await UmengAnalyticsPlugin.init(
       androidKey: '5dfc5b91cb23d26df0000a90',
       iosKey: '5dfc5c034ca35748d1000c4c',
     );
 
-    if (!mounted) return;
+    print('Umeng initialized.');
+
+    if (!mounted) {
+      return;
+    }
 
     setState(() {
       _platformVersion = result ? 'OK' : 'ERROR';

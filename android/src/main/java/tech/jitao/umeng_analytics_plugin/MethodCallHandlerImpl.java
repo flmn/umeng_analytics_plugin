@@ -80,7 +80,7 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
 
         MobclickAgent.onPageStart(viewName);
 
-        result.success(null);
+        result.success(true);
     }
 
     private void pageEnd(MethodCall call, MethodChannel.Result result) {
@@ -88,7 +88,7 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
 
         MobclickAgent.onPageEnd(viewName);
 
-        result.success(null);
+        result.success(true);
     }
 
     private void event(MethodCall call, MethodChannel.Result result) {
@@ -97,6 +97,6 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
 
         MobclickAgent.onEvent(context, eventId, label);
 
-        result.success(null);
+        result.success(true);
     }
 }

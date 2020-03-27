@@ -33,6 +33,8 @@
     [MobClick setLogEnabled:call.arguments[@"logEnabled"]];
     [MobClick setEncryptEnabled:call.arguments[@"encryptEnabled"]];
     [MobClick setLogSendInterval:[call.arguments[@"sessionContinueMillis"] doubleValue]];
+    
+    result([NSNumber numberWithBool:YES]);
 }
 
 - (void)pageStart:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -40,7 +42,7 @@
     
     [MobClick beginLogPageView:viewName];
     
-    result(nil);
+    result([NSNumber numberWithBool:YES]);
 }
 
 - (void)pageEnd:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -48,7 +50,7 @@
     
     [MobClick endLogPageView:viewName];
     
-    result(nil);
+    result([NSNumber numberWithBool:YES]);
 }
 
 - (void)event:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -61,7 +63,7 @@
         [MobClick event:eventId label:label];
     }
     
-    result(nil);
+    result([NSNumber numberWithBool:YES]);
 }
 
 @end
