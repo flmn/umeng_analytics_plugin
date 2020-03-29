@@ -54,6 +54,10 @@ MaterialApp(
 class AppAnalysis extends NavigatorObserver {
   @override
   void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
+    if (previousRoute.settings.name != null) {
+      UMengAnalyticsPlugin.pageEnd(previousRoute.settings.name);
+    }
+
     if (route.settings.name != null) {
       UMengAnalyticsPlugin.pageStart(route.settings.name);
     }
@@ -63,6 +67,21 @@ class AppAnalysis extends NavigatorObserver {
   void didPop(Route<dynamic> route, Route<dynamic> previousRoute) {
     if (route.settings.name != null) {
       UMengAnalyticsPlugin.pageEnd(route.settings.name);
+    }
+
+    if (previousRoute.settings.name != null) {
+      UMengAnalyticsPlugin.pageStart(previousRoute.settings.name);
+    }
+  }
+
+  @override
+  void didReplace({Route<dynamic> newRoute, Route<dynamic> oldRoute}) {
+    if (oldRoute.settings.name != null) {
+      UMengAnalyticsPlugin.pageEnd(oldRoute.settings.name);
+    }
+    
+    if (newRoute.settings.name != null) {
+      UMengAnalyticsPlugin.pageStart(newRoute.settings.name);
     }
   }
 }
