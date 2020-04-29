@@ -1,6 +1,6 @@
 name: umeng_analytics_plugin
 description: A Umeng analytics Flutter plugin support both android and ios. Umeng is a popular App analytics product in China.
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/flmn/umeng_analytics_plugin
 
 environment:
