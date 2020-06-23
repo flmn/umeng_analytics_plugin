@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -71,5 +72,43 @@ class UmengAnalyticsPlugin {
     }
 
     return _channel.invokeMethod<bool>('event', map);
+  }
+
+  static Future<bool> eventObj(String eventId, Map<String, String> params) async {
+    if (Platform.isIOS) return false;
+    Map<String, dynamic> map = {
+      'eventId': eventId,
+      'map': params,
+    };
+
+    return _channel.invokeMethod<bool>('eventObj', map);
+  }
+
+  static Future<bool> onProfileSignIn(String userId, {String channel}) async {
+    if (Platform.isIOS) return false;
+    Map<String, dynamic> map = {
+      'userId': userId,
+    };
+
+    if (channel != null) {
+      map['channel'] = channel;
+    }
+
+    return _channel.invokeMethod<bool>('onProfileSignIn', map);
+  }
+
+  static Future<bool> generateCustomLog(String exception, String type) async {
+    if (Platform.isIOS) return false;
+    Map<String, dynamic> map = {
+      'exception': exception,
+      'type': type,
+    };
+
+    return _channel.invokeMethod<bool>('generateCustomLog', map);
+  }
+
+  static Future<bool> onKillProgress() async {
+    if (Platform.isIOS) return false;
+    return _channel.invokeMethod<bool>('onKillProgress');
   }
 }

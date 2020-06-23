@@ -12,13 +12,13 @@ public class UmengAnalyticsPlugin implements FlutterPlugin {
 
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "jitao.tech/umeng_analytics_plugin");
-        channel.setMethodCallHandler(new MethodCallHandlerImpl(channel, registrar.context()));
+        channel.setMethodCallHandler(new MethodCallHandlerImpl(registrar.context()));
     }
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         final MethodChannel channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "jitao.tech/umeng_analytics_plugin");
-        channel.setMethodCallHandler(new MethodCallHandlerImpl(channel, flutterPluginBinding.getApplicationContext()));
+        channel.setMethodCallHandler(new MethodCallHandlerImpl(flutterPluginBinding.getApplicationContext()));
     }
 
     @Override

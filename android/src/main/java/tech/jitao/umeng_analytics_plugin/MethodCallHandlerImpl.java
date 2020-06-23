@@ -2,23 +2,26 @@ package tech.jitao.umeng_analytics_plugin;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
+import com.umeng.umcrash.UMCrash;
+
+import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
-    private final MethodChannel channel;
     private final Context context;
 
-    MethodCallHandlerImpl(MethodChannel channel, Context context) {
-        this.channel = channel;
+    MethodCallHandlerImpl(Context context) {
         this.context = context;
     }
 
     @Override
-    public void onMethodCall(MethodCall call, MethodChannel.Result result) {
+    public void onMethodCall(MethodCall call, @NonNull MethodChannel.Result result) {
         switch (call.method) {
             case "init":
                 init(call, result);
@@ -31,6 +34,18 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
                 break;
             case "event":
                 event(call, result);
+                break;
+            case "eventObj":
+                eventObj(call, result);
+                break;
+            case "onProfileSignIn":
+                onProfileSignIn(call, result);
+                break;
+            case "generateCustomLog":
+                generateCustomLog(call, result);
+                break;
+            case "onKillProgress":
+                onKillProgress(result);
                 break;
             default:
                 result.notImplemented();
@@ -97,6 +112,42 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
 
         MobclickAgent.onEvent(context, eventId, label);
 
+        result.success(true);
+    }
+
+    private void eventObj(MethodCall call, MethodChannel.Result result) {
+        final String eventId = call.argument("eventId");
+        final Map<String, Object> map = call.argument("map");
+
+        MobclickAgent.onEventObject(context, eventId, map);
+
+        result.success(true);
+    }
+
+    private void onProfileSignIn(MethodCall call, MethodChannel.Result result) {
+        final String channel = call.argument("channel");
+        final String userId = call.argument("userId");
+
+        if (channel == null) {
+            MobclickAgent.onProfileSignIn(userId);
+        } else {
+            MobclickAgent.onProfileSignIn(channel, userId);
+        }
+
+        result.success(true);
+    }
+
+    private void generateCustomLog(MethodCall call, MethodChannel.Result result) {
+        final String exception = call.argument("exception");
+        final String type = call.argument("type");
+
+        UMCrash.generateCustomLog(exception, type);
+
+        result.success(true);
+    }
+
+    private void onKillProgress(MethodChannel.Result result) {
+        MobclickAgent.onKillProcess(context);
         result.success(true);
     }
 }
