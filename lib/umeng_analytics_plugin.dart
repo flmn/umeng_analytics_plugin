@@ -97,6 +97,11 @@ class UmengAnalyticsPlugin {
     return _channel.invokeMethod<bool>('onProfileSignIn', map);
   }
 
+  static Future<bool> onProfileSignOff() async {
+    if (Platform.isIOS) return false;
+    return _channel.invokeMethod<bool>('onProfileSignOff');
+  }
+
   static Future<bool> generateCustomLog(String exception, String type) async {
     if (Platform.isIOS) return false;
     Map<String, dynamic> map = {

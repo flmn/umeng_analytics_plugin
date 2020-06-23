@@ -41,6 +41,9 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
             case "onProfileSignIn":
                 onProfileSignIn(call, result);
                 break;
+            case "onProfileSignOff":
+                onProfileSignOff(result);
+                break;
             case "generateCustomLog":
                 generateCustomLog(call, result);
                 break;
@@ -134,6 +137,11 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
             MobclickAgent.onProfileSignIn(channel, userId);
         }
 
+        result.success(true);
+    }
+
+    private void onProfileSignOff(MethodChannel.Result result){
+        MobclickAgent.onProfileSignOff();
         result.success(true);
     }
 
