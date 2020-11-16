@@ -61,7 +61,7 @@ class UmengAnalyticsPlugin {
   }
 
   /// Send a general event for [eventId] with a [label]
-  static Future<bool> event(String eventId, {String label}) async {
+  static Future<bool> event(String eventId, {String label= 'label'}) async {
     Map<String, dynamic> map = {
       'eventId': eventId,
     };
